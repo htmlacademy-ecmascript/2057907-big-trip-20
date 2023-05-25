@@ -1,7 +1,7 @@
+import {render, RenderPosition} from './framework/render.js';
 import FilterView from './view/filter-view.js';
 import SortView from './view/sort-view.js';
 import TripInfoView from './view/trip-info.js';
-import {render, RenderPosition} from './render.js';
 import TripPresenter from './presenter/trip-presenter.js';
 
 import MockService from './service/mock-service.js';
