@@ -2,6 +2,7 @@ import {render, replace} from '../framework/render.js';
 import TripListView from '../view/trip-list-view.js';
 import TripEventView from '../view/trip-event.js';
 import EditFormView from '../view/edit-form-view.js';
+import NoPointView from '../view/no-point-view.js';
 
 export default class TripPresenter {
   #tripContainer = null;
@@ -22,11 +23,15 @@ export default class TripPresenter {
 
   init() {
     this.#points = [...this.#pointsModel.get()];
-    render(this.#tripListComponent, this.#tripContainer);
+    if(this.#points.length > 0) {
+      render(this.#tripListComponent, this.#tripContainer);
 
-    this.#points.forEach((point) => {
-      this.#renderPoint(point);
-    });
+      this.#points.forEach((point) => {
+        this.#renderPoint(point);
+      });
+    } else {
+      render(new NoPointView, this.#tripContainer);
+    }
   }
 
   #renderPoint = (point) => {

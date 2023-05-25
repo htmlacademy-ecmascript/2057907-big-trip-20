@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import {formatStringToDateTime, formatStringToShortDate, formatStringToTime, getPointDuration} from '../utils.js';
+import {formatStringToDateTime, formatStringToShortDate, formatStringToTime, getPointDuration} from '../utils/point.js';
 
 function createTripEventTemplate({point, pointDestinations, pointOffers }) {
   const {basePrice, dateFrom, dateTo, isFavorite, type} = point;
