@@ -1,4 +1,4 @@
-import {render, RenderPosition, replace, remove} from '../framework/render.js';
+import {render, replace, remove} from '../framework/render.js';
 import TripListView from '../view/trip-list-view.js';
 import NoPointView from '../view/no-point-view.js';
 import SortView from '../view/sort-view.js';
@@ -64,19 +64,19 @@ export default class TripPresenter {
     this.#pointPresenters.clear();
   }
 
-  #renderSort = (container) => {
+  #renderSort = (tripContainer) => {
     const prevSortComponent = this.#sortComponent;
 
     this.#sortComponent = new SortView({
       sortType: this.#currentSortType,
-      onSortTypeChange: this.#handleSortTypeChange
+      onSortTypeChange: this.#handleSortTypeChange,
     });
 
     if (prevSortComponent) {
       replace(this.#sortComponent, prevSortComponent);
       remove(prevSortComponent);
     } else {
-      render(this.#sortComponent, container, RenderPosition.AFTERBEGIN);
+      render(this.#sortComponent, tripContainer);
     }
   };
 
