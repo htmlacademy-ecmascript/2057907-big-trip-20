@@ -18,14 +18,15 @@ function getSortItem(sortItem) {
         type="radio"
         name="trip-sort"
         value="sort-${sortItem.type}"
-        data-sort-type="${sortItem.type}"
         ${(sortItem.isChecked) ? 'checked' : ''}
         ${(sortItem.isDisabled) ? 'disabled' : ''}
         >
       <label
-      class="trip-sort__btn"
-      for="sort-${sortItem.type}"
-      >${sortItem.type}
+        class="trip-sort__btn"
+        for="sort-${sortItem.type}"
+        data-sort-type="${sortItem.type}"
+      >
+        ${sortItem.type}
       </label>
     </div>
   `;
