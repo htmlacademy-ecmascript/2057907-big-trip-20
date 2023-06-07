@@ -9,7 +9,12 @@ function getRandomValue(items) {
   return items[getRandomInteger(0, items.length - 1)];
 }
 
+function updateItem(items, update) {
+  return items.map((item) => item.id === update.id ? update : item);
+}
+
 export {
   getRandomInteger,
-  getRandomValue
+  getRandomValue,
+  updateItem
 };
