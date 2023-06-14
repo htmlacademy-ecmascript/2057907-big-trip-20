@@ -3,6 +3,9 @@ import {POINT_EMPTY, TYPES} from '../const.js';
 import dayjs from 'dayjs';
 import {capitalize} from '../utils/point.js';
 
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
+
 const createEventTypeTemplate = (type) => {
   const value = capitalize(type);
 
@@ -121,7 +124,7 @@ export default class EditFormView extends AbstractStatefulView {
   #pointDestinations = null;
   #pointOffers = null;
   #handleFormSubmit = null;
-  #handleEditClick = null;
+  #datepicker = null;
 
   constructor({point = POINT_EMPTY, pointDestinations, pointOffers, onFormSubmit}) {
     super();
@@ -139,6 +142,15 @@ export default class EditFormView extends AbstractStatefulView {
       pointDestinations: this.#pointDestinations,
       pointOffers: this.#pointOffers
     });
+  }
+
+  removeElement() {
+    super.removeElement();
+
+    if (this.#datepicker) {
+      this.#datepicker.destroy();
+      this.#datepicker = null;
+    }
   }
 
   reset = (point) => this.updateElement(point);
@@ -161,6 +173,9 @@ export default class EditFormView extends AbstractStatefulView {
 
     this.element.querySelector('.event__input--price')
       .addEventListener('change', this.#priceInputChange);
+
+    this.#setDatepickerFrom();
+    this.#setDatepickerTo();
   };
 
   #formSubmitHandler = (evt) => {
@@ -205,6 +220,45 @@ export default class EditFormView extends AbstractStatefulView {
       });
     }
   };
+
+  #dateFromChangeHandler = ([userDate]) => {
+    this.updateElement({
+      dateFrom: userDate,
+    });
+  };
+
+  #dateToChangeHandler = ([userDate]) => {
+    this.updateElement({
+      dateTo: userDate,
+    });
+  };
+
+  #setDatepickerFrom() {
+    this.#datepicker = flatpickr(
+      this.element.querySelector('#event-start-time-1'),
+      {
+        enableTime: true,
+        dateFormat: 'd/m/y H:i',
+        defaultDate: this._state.dateFrom,
+        onChange: this.#dateFromChangeHandler,
+        'time_24hr': true,
+      },
+    );
+  }
+
+  #setDatepickerTo() {
+    this.#datepicker = flatpickr(
+      this.element.querySelector('#event-end-time-1'),
+      {
+        enableTime: true,
+        dateFormat: 'd/m/y H:i',
+        minDate: this._state.dateFrom,
+        defaultDate: this._state.dateTo,
+        onChange: this.#dateToChangeHandler,
+        'time_24hr': true,
+      },
+    );
+  }
 
   static parsePointToState(point) {
     return {...point};
