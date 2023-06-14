@@ -35,11 +35,10 @@ export default class PointPresenter {
 
     const prevPointComponent = this.#pointComponent;
     const prevPointEditComponent = this.#pointEditComponent;
-
     this.#pointComponent = new TripEventView({
       point: this.#point,
-      pointDestinations: this.#destinationsModel.getById(point.destination),
-      pointOffers: this.#offersModel.getByType(point.type),
+      pointDestinations: this.#destinationsModel.getById(this.#point.destination),
+      pointOffers: this.#offersModel.getByType(this.#point.type),
       onEditClick: this.#handleEditClick,
       onFavoriteClick: this.#handleFavoriteClick
     });
